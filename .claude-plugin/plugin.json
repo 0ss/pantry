@@ -1,0 +1,7 @@
+{
+  "name": "pantry",
+  "version": "0.1.0",
+  "description": "Your agent checks the pantry before going shopping. Blocks duplicate dependencies, points at code you already have.",
+  "author": { "name": "Salah" },
+  "hooks": "./hooks/hooks.json"
+}

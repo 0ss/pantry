@@ -1,0 +1,12 @@
+{
+  "name": "fixture-node-lib",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,186 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`pantry check snapshots (messy) > date formatting shows all three duplicates 1`] = `
+"🥫 PANTRY CHECK
+Need: format a date
+
+Already installed:
+  ✓ dayjs (package.json, used in 1 file)
+  ✓ moment (package.json, used in 1 file)
+
+Existing code:
+  ✓ formatDate(date, fmt)  src/helpers/dates.ts:4
+  ✓ formatDate(date)       src/utils/date.ts:4
+  ✓ formatDate(date)       src/features/orders/format.ts:2
+  ✓ orderNumber()          src/features/orders/format.ts:7
+
+Used in:
+  - src/features/orders/OrderRow.tsx
+
+Recommendation:
+  Reuse src/helpers/dates.ts. Do not install another date library."
+`;
+
+exports[`pantry check snapshots (messy) > unique ids 1`] = `
+"🥫 PANTRY CHECK
+Need: generate a unique id
+
+Already installed:
+  ✓ uuid (package.json, used in 1 file)
+
+Recommendation:
+  Use uuid — it is already installed. Do not install another ID generator."
+`;
+
+exports[`pantry check snapshots (nextjs-app) > a modal (synonym → Dialog) 1`] = `
+"🥫 PANTRY CHECK
+Need: a delete confirmation modal
+
+Already installed:
+  ✓ components/ui (shadcn-style) (in-repo, used in 3 files)
+
+Existing code:
+  ✓ Dialog({ open, onClose, title, children, className })  src/components/ui/dialog.tsx:15
+  ✓ Button({ variant, className, ...props })               src/components/ui/button.tsx:9
+  ✓ DialogFooter({ children })                             src/components/ui/dialog.tsx:37
+  ✓ DeleteAccountDialog({ onConfirm })                     src/features/settings/DeleteAccountDialog.tsx:6
+  ✓ useToast()                                             src/components/ui/toast.tsx:43
+
+Used in:
+  - src/features/settings/DeleteAccountDialog.tsx
+
+Recommendation:
+  Reuse src/components/ui/dialog.tsx. Do not install another UI component kit."
+`;
+
+exports[`pantry check snapshots (nextjs-app) > class name joining 1`] = `
+"🥫 PANTRY CHECK
+Need: join class names conditionally
+
+Existing code:
+  ✓ cn(...classes)  src/lib/utils.ts:2
+
+Used in:
+  - src/components/ui/button.tsx
+  - src/components/ui/dialog.tsx
+  - src/components/ui/toast.tsx
+
+Recommendation:
+  Reuse src/lib/utils.ts."
+`;
+
+exports[`pantry check snapshots (nextjs-app) > date formatting 1`] = `
+"🥫 PANTRY CHECK
+Need: date formatting
+
+Already installed:
+  ✓ dayjs (package.json, used in 1 file)
+
+Existing code:
+  ✓ formatDate(date, format)  src/lib/date.ts:7
+  ✓ formatRelativeTime(date)  src/lib/date.ts:12
+
+Used in:
+  - src/features/billing/InvoiceRow.tsx
+  - src/features/billing/InvoiceTable.tsx
+  - src/lib/date.test.ts
+
+Recommendation:
+  Reuse src/lib/date.ts. Do not install another date library."
+`;
+
+exports[`pantry check snapshots (nextjs-app) > debounced search input 1`] = `
+"🥫 PANTRY CHECK
+Need: debounce a search input
+
+Existing code:
+  ✓ useDebounce(value, delay)  src/hooks/useDebounce.ts:4
+  ✓ cn(...classes)             src/lib/utils.ts:2
+  ✓ truncate(text, max)        src/lib/utils.ts:7
+
+Used in:
+  - src/features/feed/FeedList.tsx
+
+Recommendation:
+  Reuse src/hooks/useDebounce.ts."
+`;
+
+exports[`pantry check snapshots (nextjs-app) > relative time on comments 1`] = `
+"🥫 PANTRY CHECK
+Need: relative time on comments
+
+Already installed:
+  ✓ dayjs (package.json, used in 1 file)
+
+Existing code:
+  ✓ formatRelativeTime(date)  src/lib/date.ts:12
+  ✓ formatDate(date, format)  src/lib/date.ts:7
+
+Used in:
+  - src/features/feed/PostCard.tsx
+
+Recommendation:
+  Reuse src/lib/date.ts. Do not install another date library."
+`;
+
+exports[`pantry check snapshots (nextjs-app) > signup form validation 1`] = `
+"🥫 PANTRY CHECK
+Need: signup form validation
+
+Already installed:
+  ✓ react-hook-form (package.json, used in 2 files)
+  ✓ zod (package.json, used in 1 file)
+
+Existing code:
+  ✓ signupSchema              src/schemas/user.ts:4
+  ✓ SignupForm({ onSignup })  src/features/auth/SignupForm.tsx:6
+  ✓ formatDate(date, format)  src/lib/date.ts:7
+  ✓ formatRelativeTime(date)  src/lib/date.ts:12
+  ✓ profileSchema             src/schemas/user.ts:13
+
+Used in:
+  - src/features/auth/SignupForm.tsx
+
+Recommendation:
+  Reuse src/schemas/user.ts. Do not install another form library."
+`;
+
+exports[`pantry check snapshots (nextjs-app) > toast on save 1`] = `
+"🥫 PANTRY CHECK
+Need: show a toast when saving
+
+Existing code:
+  ✓ useToast()                   src/components/ui/toast.tsx:43
+  ✓ ToastProvider({ children })  src/components/ui/toast.tsx:16
+
+Used in:
+  - src/features/settings/ProfileForm.tsx
+
+Recommendation:
+  Reuse src/components/ui/toast.tsx."
+`;
+
+exports[`pantry check snapshots (node-lib) > clamp a number 1`] = `
+"🥫 PANTRY CHECK
+Need: clamp a number to a range
+
+Existing code:
+  ✓ clamp(value, min, max)  src/math.ts:2
+
+Used in:
+  - src/math.test.ts
+
+Recommendation:
+  Reuse src/math.ts."
+`;
+
+exports[`pantry check snapshots (node-lib) > lodash-style helpers 1`] = `
+"🥫 PANTRY CHECK
+Need: lodash helpers
+
+Already installed:
+  ✓ lodash-es (package.json, used in 1 file)
+
+Recommendation:
+  Use lodash-es — it is already installed. Do not install another utility belt."
+`;

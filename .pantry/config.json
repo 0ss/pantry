@@ -1,0 +1,7 @@
+{
+  "include": ["src/**/*.{ts,tsx,js,jsx}"],
+  "exclude": ["fixtures/**", "benchmarks/**", "research/**", "demo/**"],
+  "tokenBudget": 600,
+  "blockMode": "block",
+  "extraCapabilities": []
+}

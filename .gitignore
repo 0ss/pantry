@@ -1,0 +1,16 @@
+node_modules/
+coverage/
+# dist/ is committed on purpose: the Claude Code plugin runs straight from a
+# git clone, no npm install step. `npm run build` before committing releases.
+.DS_Store
+*.tgz
+
+# pantry runtime state (per-repo)
+.pantry/inventory.json
+.pantry/ledger.jsonl
+.pantry/errors.log
+.pantry/backups/
+
+# fixture installs
+fixtures/**/node_modules/
+.DS_Store

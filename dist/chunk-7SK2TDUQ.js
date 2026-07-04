@@ -1,0 +1,427 @@
+#!/usr/bin/env node
+
+// src/capabilities/match.ts
+import { readFileSync } from "fs";
+import { join } from "path";
+
+// src/capabilities/table.json
+var table_default = {
+  families: [
+    {
+      id: "dates",
+      label: "date library",
+      synonyms: [
+        "date",
+        "time",
+        "datetime",
+        "timestamp",
+        "relative time",
+        "time ago",
+        "duration",
+        "calendar",
+        "format date",
+        "date formatting"
+      ],
+      packages: ["moment", "dayjs", "date-fns", "luxon", "js-joda", "@js-joda/*"],
+      native: {
+        name: "Intl.DateTimeFormat / Temporal",
+        note: "Intl.DateTimeFormat and Intl.RelativeTimeFormat cover most formatting; Temporal is coming"
+      },
+      exclusive: true
+    },
+    {
+      id: "http-client",
+      label: "HTTP client",
+      synonyms: ["http", "fetch", "request", "api call", "rest", "ajax", "xhr", "api client"],
+      packages: ["axios", "got", "ky", "superagent", "node-fetch", "isomorphic-fetch"],
+      native: {
+        name: "fetch",
+        note: "global fetch is available in Node >=18 and all browsers"
+      },
+      exclusive: true
+    },
+    {
+      id: "utility-belt",
+      label: "utility belt",
+      synonyms: [
+        "lodash",
+        "utils",
+        "helpers",
+        "debounce",
+        "throttle",
+        "groupby",
+        "chunk",
+        "pick",
+        "omit"
+      ],
+      packages: ["lodash", "lodash-es", "underscore", "ramda", "radash", "remeda"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "uuid",
+      label: "ID generator",
+      synonyms: ["uuid", "guid", "unique id", "id generation", "random id", "identifier"],
+      packages: ["uuid", "nanoid", "@paralleldrive/cuid2", "cuid", "ulid"],
+      native: {
+        name: "crypto.randomUUID",
+        note: "crypto.randomUUID() is built into Node >=19 and all modern browsers"
+      },
+      exclusive: true
+    },
+    {
+      id: "classnames",
+      label: "classname joiner",
+      synonyms: ["classnames", "class names", "conditional classes", "cn"],
+      packages: ["classnames", "clsx"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "validation",
+      label: "schema validation",
+      synonyms: [
+        "validation",
+        "validate",
+        "schema",
+        "parse input",
+        "form validation",
+        "type guard"
+      ],
+      packages: ["zod", "yup", "joi", "valibot", "arktype", "superstruct"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "forms",
+      label: "form library",
+      synonyms: [
+        "form",
+        "forms",
+        "form state",
+        "field",
+        "form handling",
+        "signup form",
+        "login form"
+      ],
+      packages: ["react-hook-form", "formik", "final-form", "react-final-form"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "state",
+      label: "state management",
+      synonyms: ["state", "store", "global state", "state management"],
+      packages: [
+        "redux",
+        "@reduxjs/toolkit",
+        "zustand",
+        "jotai",
+        "recoil",
+        "mobx",
+        "valtio",
+        "xstate"
+      ],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "data-fetching",
+      label: "data-fetching cache",
+      synonyms: ["query", "data fetching", "server state", "cache api", "swr", "mutation"],
+      packages: ["@tanstack/react-query", "react-query", "swr"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "styling",
+      label: "styling solution",
+      synonyms: ["css-in-js", "styled", "styling", "css"],
+      packages: ["styled-components", "@emotion/*", "tailwindcss"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "ui-kit",
+      label: "UI component kit",
+      synonyms: [
+        "modal",
+        "dialog",
+        "popup",
+        "overlay",
+        "sheet",
+        "drawer",
+        "dropdown",
+        "tooltip",
+        "popover",
+        "button",
+        "component library",
+        "ui kit",
+        "accordion",
+        "tabs"
+      ],
+      packages: ["@mui/*", "antd", "@chakra-ui/*", "@radix-ui/*", "@headlessui/*"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "icons",
+      label: "icon set",
+      synonyms: ["icon", "icons", "svg icons"],
+      packages: ["lucide-react", "react-icons", "@heroicons/*", "@tabler/icons*"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "charts",
+      label: "charting library",
+      synonyms: ["chart", "charts", "graph", "plot", "visualization", "sparkline"],
+      packages: ["recharts", "chart.js", "react-chartjs-2", "victory", "@nivo/*", "echarts"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "tables",
+      label: "table library",
+      synonyms: ["table", "data grid", "datagrid", "grid", "data table"],
+      packages: ["@tanstack/react-table", "ag-grid-*", "react-data-grid"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "animation",
+      label: "animation library",
+      synonyms: ["animation", "animate", "transition", "motion", "spring"],
+      packages: ["framer-motion", "motion", "react-spring", "@react-spring/*", "gsap", "animejs"],
+      native: {
+        name: "CSS transitions / Web Animations API",
+        note: "CSS transitions and element.animate() cover most UI motion"
+      },
+      exclusive: false
+    },
+    {
+      id: "toasts",
+      label: "toast library",
+      synonyms: ["toast", "notification", "snackbar", "alert popup", "flash message"],
+      packages: ["react-hot-toast", "sonner", "react-toastify", "notistack"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "dnd",
+      label: "drag-and-drop library",
+      synonyms: ["drag", "drop", "drag and drop", "dnd", "sortable", "reorder"],
+      packages: ["@dnd-kit/*", "react-beautiful-dnd", "react-dnd"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "markdown",
+      label: "markdown renderer",
+      synonyms: ["markdown", "md", "rich text render"],
+      packages: ["marked", "markdown-it", "remark", "react-markdown"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "env",
+      label: "env loader",
+      synonyms: ["env", "dotenv", "environment variables", "config loading"],
+      packages: ["dotenv", "dotenv-flow"],
+      native: {
+        name: "node --env-file",
+        note: "Node >=20.6 loads .env files natively with --env-file"
+      },
+      exclusive: true
+    },
+    {
+      id: "unit-testing",
+      label: "unit test runner",
+      synonyms: ["test", "unit test", "test runner", "testing"],
+      packages: ["jest", "vitest", "mocha", "ava"],
+      native: {
+        name: "node:test",
+        note: "node:test is a built-in runner if you want zero deps"
+      },
+      exclusive: true
+    },
+    {
+      id: "e2e",
+      label: "e2e test framework",
+      synonyms: ["e2e", "end to end", "browser test", "integration test"],
+      packages: ["playwright", "@playwright/test", "cypress", "puppeteer"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "querystring",
+      label: "querystring parser",
+      synonyms: ["querystring", "query string", "url params", "search params"],
+      packages: ["qs", "query-string"],
+      native: { name: "URLSearchParams", note: "URLSearchParams handles all common cases" },
+      exclusive: true
+    },
+    {
+      id: "deep-ops",
+      label: "deep object ops",
+      synonyms: ["deep equal", "deep clone", "deep copy", "compare objects"],
+      packages: [
+        "fast-deep-equal",
+        "deep-equal",
+        "clone",
+        "rfdc",
+        "lodash.clonedeep",
+        "lodash.isequal"
+      ],
+      native: {
+        name: "structuredClone",
+        note: "structuredClone() is built into Node >=17 and all modern browsers"
+      },
+      exclusive: true
+    },
+    {
+      id: "events",
+      label: "event emitter",
+      synonyms: ["event emitter", "events", "pubsub", "pub sub", "emit"],
+      packages: ["eventemitter3", "mitt"],
+      native: {
+        name: "EventTarget",
+        note: "EventTarget works in Node and browsers; node:events on the server"
+      },
+      exclusive: true
+    },
+    {
+      id: "csv",
+      label: "CSV parser",
+      synonyms: ["csv", "csv export", "csv parse", "spreadsheet export"],
+      packages: ["papaparse", "csv-parse", "csv-stringify"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "yaml",
+      label: "YAML parser",
+      synonyms: ["yaml", "yml"],
+      packages: ["js-yaml", "yaml"],
+      native: null,
+      exclusive: true
+    },
+    {
+      id: "hashing",
+      label: "hashing library",
+      synonyms: ["hash", "hashing", "md5", "sha", "digest", "checksum"],
+      packages: ["crypto-js", "md5", "bcryptjs", "sha.js"],
+      native: {
+        name: "node:crypto",
+        note: "node:crypto covers hashing, HMAC, and password derivation (scrypt)"
+      },
+      exclusive: false
+    },
+    {
+      id: "i18n",
+      label: "i18n library",
+      synonyms: ["i18n", "internationalization", "translation", "locale"],
+      packages: ["i18next", "react-i18next", "react-intl", "next-intl"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "logging",
+      label: "logging library",
+      synonyms: ["logging", "logger", "log"],
+      packages: ["winston", "pino", "bunyan"],
+      native: null,
+      exclusive: false
+    },
+    {
+      id: "dev-tooling",
+      label: "lint/format tooling",
+      synonyms: ["lint", "linting", "format", "formatter", "prettier"],
+      packages: ["eslint", "prettier", "@biomejs/biome"],
+      native: null,
+      exclusive: false
+    }
+  ]
+};
+
+// src/capabilities/match.ts
+var cachedFamilies = null;
+function loadFamilies(repoRoot) {
+  if (cachedFamilies && !repoRoot) return cachedFamilies;
+  const families = [...table_default.families];
+  if (repoRoot) {
+    try {
+      const raw = readFileSync(join(repoRoot, ".pantry", "config.json"), "utf8");
+      const config = JSON.parse(raw);
+      if (Array.isArray(config.extraCapabilities)) families.push(...config.extraCapabilities);
+    } catch {
+    }
+  } else {
+    cachedFamilies = families;
+  }
+  return families;
+}
+function pkgMatches(pkg, pattern) {
+  if (pattern.endsWith("*")) return pkg.startsWith(pattern.slice(0, -1));
+  return pkg === pattern;
+}
+function familyForPackage(pkg, families) {
+  for (const family of families) {
+    if (family.packages.some((p) => pkgMatches(pkg, p))) return family;
+  }
+  return null;
+}
+function matchedPattern(pkg, family) {
+  return family.packages.find((p) => pkgMatches(pkg, p)) ?? null;
+}
+function familiesForNeed(need, families) {
+  const needLower = need.toLowerCase();
+  const tokens = tokenize(needLower);
+  const hits = [];
+  for (const family of families) {
+    const candidates = [family.id, family.label, ...family.synonyms].map((s) => s.toLowerCase());
+    const hit = candidates.some((c) => {
+      const candidateTokens = tokenize(c);
+      if (candidateTokens.length === 0) return false;
+      if (candidateTokens.length > 1 && needLower.includes(c)) return true;
+      return candidateTokens.every((t) => tokens.includes(t));
+    });
+    if (hit) hits.push(family);
+  }
+  return hits;
+}
+function expandNeed(need, families) {
+  const tokens = new Set(tokenize(need.toLowerCase()));
+  for (const family of familiesForNeed(need, families)) {
+    tokens.add(family.id);
+    for (const syn of family.synonyms) for (const t of tokenize(syn)) tokens.add(t);
+  }
+  return [...tokens];
+}
+function tokenize(text) {
+  return text.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length > 1 && !STOPWORDS.has(t));
+}
+var STOPWORDS = /* @__PURE__ */ new Set([
+  "a",
+  "an",
+  "the",
+  "of",
+  "for",
+  "to",
+  "in",
+  "on",
+  "and",
+  "or",
+  "with",
+  "my",
+  "our"
+]);
+
+export {
+  loadFamilies,
+  familyForPackage,
+  matchedPattern,
+  familiesForNeed,
+  expandNeed,
+  tokenize
+};

@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npx biome check .
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm test
+
+  no-phone-home:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # the README promises zero runtime network calls. keep the promise.
+      - name: grep for network primitives in src/
+        run: |
+          if grep -rnE "fetch\(|from ['\"]https?|require\(['\"]https?|node:http|node:https|node:net|node:tls|node:dgram|XMLHttpRequest|WebSocket" src/; then
+            echo "::error::network primitive found in src/ — pantry must stay offline"
+            exit 1
+          fi
+          echo "src/ is clean"
+
+  dogfood:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run build
+      # pantry's own audit must be clean — a tool about tidy repos can't live in a messy one
+      - run: node dist/cli.js init
+      - run: node dist/cli.js audit --strict
+      - run: node dist/cli.js check "date formatting" --plain
