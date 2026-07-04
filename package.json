@@ -18,13 +18,7 @@
   "bin": {
     "pantry": "dist/cli.js"
   },
-  "files": [
-    "dist",
-    "skills",
-    "README.md",
-    "LICENSE",
-    "SECURITY.md"
-  ],
+  "files": ["dist", "skills", "README.md", "LICENSE", "SECURITY.md"],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
