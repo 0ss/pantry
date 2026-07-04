@@ -11,7 +11,7 @@ import {
 import {
   loadFamilies,
   matchedPattern
-} from "./chunk-7SK2TDUQ.js";
+} from "./chunk-DID37CC6.js";
 import {
   __toESM
 } from "./chunk-FYS2JH42.js";
@@ -22,7 +22,7 @@ async function audit(root, opts = {}) {
   let inventory = loadInventory(root);
   if (!inventory) {
     if (!opts.json) console.error("(no inventory yet \u2014 running pantry init first)");
-    const { init } = await import("./init-BA5FSVKG.js");
+    const { init } = await import("./init-FXK6TDEF.js");
     await init(root, { quiet: true });
     inventory = loadInventory(root);
     if (!inventory) {

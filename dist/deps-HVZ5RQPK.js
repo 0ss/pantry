@@ -2,8 +2,8 @@
 import {
   MalformedPackageJsonError,
   scanDeps
-} from "./chunk-B2O5OO6M.js";
-import "./chunk-7SK2TDUQ.js";
+} from "./chunk-ZACRB6CS.js";
+import "./chunk-DID37CC6.js";
 import "./chunk-FYS2JH42.js";
 export {
   MalformedPackageJsonError,

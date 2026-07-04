@@ -24,8 +24,11 @@ Your session context includes the exact pantry command for this machine
 ```
 
 If `pantry` is on PATH, plain `pantry check "..."` works too.
-Examples: `check "date formatting"`, `check "confirmation modal"`,
-`check "debounced input"`.
+
+Keep the need SHORT — 2 to 4 words naming the capability, like a search
+query, not a sentence. Good: `check "date formatting"`, `check "ui kit"`,
+`check "confirmation modal"`. Bad: `check "does the repo already have a
+library for formatting dates?"` (sentence words pollute the match).
 
 ## Obey the output
 

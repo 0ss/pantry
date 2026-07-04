@@ -8,8 +8,8 @@ import {
 } from "./chunk-QZWZRDGW.js";
 import {
   MalformedPackageJsonError
-} from "./chunk-B2O5OO6M.js";
-import "./chunk-7SK2TDUQ.js";
+} from "./chunk-ZACRB6CS.js";
+import "./chunk-DID37CC6.js";
 import {
   __toESM
 } from "./chunk-FYS2JH42.js";
@@ -59,15 +59,15 @@ async function main() {
   const root = findRepoRoot(process.cwd());
   switch (command) {
     case "init": {
-      const { init } = await import("./init-BA5FSVKG.js");
+      const { init } = await import("./init-FXK6TDEF.js");
       return init(root, { quiet: Boolean(flags.quiet) });
     }
     case "sync": {
-      const { sync } = await import("./sync-WPVTV2BF.js");
+      const { sync } = await import("./sync-JWCSUVEK.js");
       return sync(root, { quiet: Boolean(flags.quiet) });
     }
     case "check": {
-      const { check } = await import("./check-K744QKSZ.js");
+      const { check } = await import("./check-EFTWPVDC.js");
       const need = positional.join(" ");
       if (!need) {
         console.error('pantry check needs a need. Try: pantry check "date formatting"');
@@ -80,7 +80,7 @@ async function main() {
       });
     }
     case "audit": {
-      const { audit } = await import("./audit-5SAJXHBS.js");
+      const { audit } = await import("./audit-QDHGP6EJ.js");
       return audit(root, { json: Boolean(flags.json), strict: Boolean(flags.strict) });
     }
     case "allow": {

@@ -82,18 +82,17 @@ export function tokenize(text: string): string[] {
     .filter((t) => t.length > 1 && !STOPWORDS.has(t));
 }
 
+// words that appear in how people phrase a need but say nothing about it.
+// "does the repo already use X" must not match every use* hook in the house
 const STOPWORDS = new Set([
-  "a",
-  "an",
-  "the",
-  "of",
-  "for",
-  "to",
-  "in",
-  "on",
-  "and",
-  "or",
-  "with",
-  "my",
-  "our",
+  "a", "an", "the", "of", "for", "to", "in", "on", "and", "or", "with",
+  "my", "our", "we", "is", "it", "do", "does", "did", "can", "should",
+  "use", "uses", "using", "used", "have", "has", "had", "need", "needs",
+  "want", "wants", "get", "add", "make", "new", "some", "any", "what",
+  "which", "how", "already", "repo", "repository", "project", "codebase",
+  "install", "library", "libraries", "package", "system",
+  // framework qualifiers, not capabilities. "react component library" is
+  // about the component library part, and "react" matching react-query.ts
+  // by path was pure noise
+  "react", "vue", "svelte", "angular", "node", "js", "javascript", "typescript",
 ]);

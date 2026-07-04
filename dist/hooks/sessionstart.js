@@ -15,10 +15,10 @@ async function main() {
     const summaryPath = join(root, ".pantry", "PANTRY.md");
     if (!existsSync(inventoryPath)) {
       if (!existsSync(join(root, "package.json"))) return;
-      const { init } = await import("../init-BA5FSVKG.js");
+      const { init } = await import("../init-FXK6TDEF.js");
       await init(root, { quiet: true });
     } else if (isStale(root, inventoryPath)) {
-      const { sync } = await import("../sync-WPVTV2BF.js");
+      const { sync } = await import("../sync-JWCSUVEK.js");
       await sync(root, { quiet: true });
     }
     if (!existsSync(summaryPath)) return;

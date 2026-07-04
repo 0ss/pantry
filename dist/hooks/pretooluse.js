@@ -14,7 +14,7 @@ import {
 import {
   familyForPackage,
   loadFamilies
-} from "../chunk-7SK2TDUQ.js";
+} from "../chunk-DID37CC6.js";
 import "../chunk-FYS2JH42.js";
 
 // src/hooks/pretooluse.ts
@@ -75,7 +75,7 @@ async function main() {
     const inventory = loadInventory(root);
     let deps = inventory?.deps;
     if (!deps) {
-      const { scanDeps } = await import("../deps-XCC4XPOM.js");
+      const { scanDeps } = await import("../deps-HVZ5RQPK.js");
       deps = scanDeps(root, families);
     }
     if (deps.length === 0) return;
