@@ -44,7 +44,11 @@ jobs:
           node-version: 22
       - run: npm ci
       - run: npm run build
-      # pantry's own audit must be clean — a tool about tidy repos can't live in a messy one
+      # the plugin runs the committed dist/ straight from the clone,
+      # so a stale dist means shipping old code. fail if someone forgot to rebuild
+      - name: dist is fresh
+        run: git diff --exit-code dist || (echo "::error::dist/ is stale, run npm run build and commit" && exit 1)
+      # pantry's own audit must be clean, a tool about tidy repos can't live in a messy one
       - run: node dist/cli.js init
       - run: node dist/cli.js audit --strict
       - run: node dist/cli.js check "date formatting" --plain
