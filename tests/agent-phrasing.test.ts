@@ -17,13 +17,21 @@ beforeAll(async () => {
 
 describe("agent-style conversational needs", () => {
   it("'moment.js — date library; does the repo already have a date lib?'", () => {
-    const r = query(inventory, "moment.js — date library; does the repo already have a date lib?", FIXTURE);
+    const r = query(
+      inventory,
+      "moment.js — date library; does the repo already have a date lib?",
+      FIXTURE,
+    );
     expect(r.installed.map((i) => i.dep.name)).toContain("dayjs");
     expect(r.code[0]?.entry.file).toBe("src/lib/date.ts");
   });
 
   it("'chakra ui — React component library; what UI system does the repo already use?'", () => {
-    const r = query(inventory, "chakra ui — React component library; what UI system does the repo already use?", FIXTURE);
+    const r = query(
+      inventory,
+      "chakra ui — React component library; what UI system does the repo already use?",
+      FIXTURE,
+    );
     // top hits must be actual UI components, not hooks that mention "use" or
     // files with "react" in the path
     const topKinds = r.code.slice(0, 3).map((c) => c.entry.kind);
@@ -42,7 +50,11 @@ describe("agent-style conversational needs", () => {
   });
 
   it("'is there already a modal or dialog component in this project?'", () => {
-    const r = query(inventory, "is there already a modal or dialog component in this project?", FIXTURE);
+    const r = query(
+      inventory,
+      "is there already a modal or dialog component in this project?",
+      FIXTURE,
+    );
     expect(r.code[0]?.entry.name).toBe("Dialog");
   });
 
