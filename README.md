@@ -2,14 +2,13 @@
 
 **your agent checks the pantry before going shopping.**
 
-```
-🥫 We have a date library at home.
+told to install moment, no questions asked. this repo has luxon. watch:
 
-BLOCKED: moment — already covered by dayjs (used in 23 files).
-Use dayjs, or: pantry allow moment --reason "..."  (or PANTRY_ALLOW=1 for this session)
-```
+![claude refusing to install a duplicate date library](demo/claude-block.gif)
 
-*[demo gif coming]*
+and if an agent ever does run the install anyway, there's a wall behind the advice:
+
+![the install bouncer blocking npm install moment](demo/block.gif)
 
 ## the problem
 
@@ -35,6 +34,8 @@ pantry keeps a local inventory of what your repo already has. deps grouped by wh
 **your agent writes a dupe.** it just wrote `formatDate` and you already have one? it gets told immediately, in context, with the file and how many places use it. subagents get the pantry too, so delegated work isn't shopping blind.
 
 **your agent is about to build something.** the skill makes it ask first (also `/pantry-check`):
+
+![pantry check finding an existing modal, then honestly saying the pantry is empty](demo/check.gif)
 
 ```
 🥫 PANTRY CHECK
@@ -69,6 +70,8 @@ a tool that always finds "something" is noise. knowing when to shut up is the fe
 ## pantry audit
 
 repo health in one shot. real output from a deliberately cursed fixture (moment AND dayjs, three formatDate implementations, uuid on node 20):
+
+![pantry audit on a messy repo](demo/audit.gif)
 
 ```
 🥫 PANTRY AUDIT

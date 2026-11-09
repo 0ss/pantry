@@ -6,12 +6,13 @@ run `pantry check "<need>"` and follow its recommendation.
 ## Top reusables (usage-ranked)
 - loadFamilies(repoRoot?) — src/capabilities/match.ts (7 uses, util)
 - ensurePantryDir(root) — src/paths.ts (6 uses, util)
-- loadInventory(root) — src/paths.ts (5 uses, util)
+- loadInventory(root) — src/paths.ts (6 uses, util)
+- findRepoRoot(from) — src/paths.ts (5 uses, util)
 - pantryDir(root) — src/paths.ts (5 uses, util)
 - init(root, opts) — src/commands/init.ts (4 uses, util)
 - recordEvent(root, event, detail) — src/ledger.ts (4 uses, util)
 - loadAllowList(root) — src/commands/allow.ts (3 uses, util)
-- findRepoRoot(from) — src/paths.ts (3 uses, util)
+- isTestFile(file) — src/paths.ts (3 uses, util)
 - loadConfig(root) — src/paths.ts (3 uses, util)
 - loadParser — src/scanner/source.ts (3 uses, util)
 - scanSource(relFile, source) — src/scanner/source.ts (3 uses, util)
@@ -19,7 +20,6 @@ run `pantry check "<need>"` and follow its recommendation.
 - sync(root, opts) — src/commands/sync.ts (2 uses, util)
 - buildInventory(root) — src/inventory/build.ts (2 uses, util)
 - writeSummary(inventory, root) — src/inventory/summarize.ts (2 uses, util)
-- isTestFile(file) — src/paths.ts (2 uses, util)
 - logError(root, context, err) — src/paths.ts (2 uses, util)
 - saveInventory(root, inventory) — src/paths.ts (2 uses, util)
 - query(inventory, need, root?, top) — src/query/score.ts (2 uses, util)
@@ -29,6 +29,7 @@ run `pantry check "<need>"` and follow its recommendation.
 - uninstallClaudeCode(root) — src/adapters/claude-code.ts (1 uses, util)
 - expandNeed(need, families) — src/capabilities/match.ts (1 uses, util)
 - familiesForNeed(need, families) — src/capabilities/match.ts (1 uses, util)
+- matchedPattern(pkg, family) — src/capabilities/match.ts (1 uses, util)
 - tokenize(text) — src/capabilities/match.ts (1 uses, util)
 - allow(root, pkg, reason) — src/commands/allow.ts (1 uses, util)
 - audit(root, opts) — src/commands/audit.ts (1 uses, util)
@@ -37,4 +38,4 @@ run `pantry check "<need>"` and follow its recommendation.
 - doctor(root) — src/commands/doctor.ts (1 uses, util)
 - install(root, target) — src/commands/install.ts (1 uses, util)
 
-_26 files scanned. `pantry sync` refreshes this._
+_28 files scanned. `pantry sync` refreshes this._

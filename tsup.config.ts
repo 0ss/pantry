@@ -7,6 +7,7 @@ export default defineConfig({
     "hooks/sessionstart": "src/hooks/sessionstart.ts",
     "hooks/posttooluse": "src/hooks/posttooluse.ts",
     "hooks/subagentstart": "src/hooks/subagentstart.ts",
+    "hooks/statusline": "src/hooks/statusline.ts",
   },
   format: ["esm"],
   target: "node20",

@@ -65,6 +65,19 @@ async function main(): Promise<void> {
         `BLOCKED: ${pkg} — already covered by ${covering.name} (${usedIn}).`,
         `Use ${covering.name}, or: pantry allow ${pkg} --reason "..."  (or PANTRY_ALLOW=1 for this session)`,
       ];
+      // point at the code, not just the package — the agent probably wants
+      // a helper that already exists
+      if (inventory) {
+        const { query } = await import("../query/score.js");
+        const hit = query(inventory, family.label, root, 1).code[0];
+        if (hit) {
+          lines.splice(
+            3,
+            0,
+            `Already in the house: ${hit.entry.name}${hit.entry.signature} — ${hit.entry.file}:${hit.entry.line}`,
+          );
+        }
+      }
       if (stale) lines.push("(inventory may be stale — `pantry sync` recommended)");
 
       if (family.exclusive && config.blockMode !== "warn") {

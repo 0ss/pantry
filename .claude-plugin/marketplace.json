@@ -1,5 +1,6 @@
 {
   "name": "pantry",
+  "description": "We have a date library at home. Blocks duplicate deps, surfaces existing code before your agent rebuilds it.",
   "owner": { "name": "0ss" },
   "plugins": [
     {
